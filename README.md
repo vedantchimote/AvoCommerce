@@ -3,8 +3,8 @@ The project for AvoCommerce the eCommerce Application.
 
 <p><h3>Class diagram for AvoCommerceCommon</h3> Contains common classes for project</p>
 
-<img src="avoCommerceCommon.png">
+<img src="avoCommerceCommon.png" alt="AvoCommerce Common Classes">
 
 <p><h3>Class diagram for AvoCommerceFrontend</h3> Contains classes associated with frontend project</p>
 
-<img src="avoCommerceFrontend.png">
+<img src="avoCommerceFrontend.png" alt="AvoCommerce Frontend Classes">
