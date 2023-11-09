@@ -1,0 +1,609 @@
+@startuml
+left to right direction
+class tech.vedantchimote.customer.ForgotPasswordController {
+- CustomerService customerService
+- SettingService settingService
++ String showRequestForm()
++ String processRequestForm(HttpServletRequest,Model)
+- void sendEmail(String,String)
++ String showResetForm(String,Model)
++ String processResetForm(HttpServletRequest,Model)
+}
+class tech.vedantchimote.checkout.paypal.PayPalService {
+- {static} String GET_ORDER_API
+- SettingService settingService
++ boolean validateOrder(String)
+- PayPalOrderResponse getOrderDetails(String)
+- ResponseEntity<PayPalOrderResponse> makeRequest(String)
+- void throwExceptionForNonOKResponse(HttpStatus)
+}
+class tech.vedantchimote.order.OrderReturnResponse {
+- Integer orderId
++ <<Create>> OrderReturnResponse()
++ <<Create>> OrderReturnResponse(Integer)
++ Integer getOrderId()
++ void setOrderId(Integer)
+}
+class tech.vedantchimote.review.vote.ReviewVoteRestControllerTests {
+- ReviewRepository reviewRepo
+- MockMvc mockMvc
+- ObjectMapper objectMapper
++ void testVoteNotLogin()
++ void testVoteNonExistReview()
++ void testVoteUp()
++ void testUndoVoteUp()
+}
+class tech.vedantchimote.address.AddressRepositoryTests {
+- AddressRepository repo
++ void testAddNew()
++ void testFindByCustomer()
++ void testFindByIdAndCustomer()
++ void testUpdate()
++ void testDeleteByIdAndCustomer()
++ void testSetDefault()
++ void testSetNonDefaultAddresses()
++ void testGetDefault()
+}
+class tech.vedantchimote.product.ProductService {
++ {static} int PRODUCTS_PER_PAGE
++ {static} int SEARCH_RESULTS_PER_PAGE
+- ProductRepository repo
++ Page<Product> listByCategory(int,Integer)
++ Product getProduct(String)
++ Product getProduct(Integer)
++ Page<Product> search(String,int)
+}
+interface tech.vedantchimote.setting.CurrencyRepository {
+}
+class tech.vedantchimote.security.DatabaseLoginSuccessHandler {
+- CustomerService customerService
++ void onAuthenticationSuccess(HttpServletRequest,HttpServletResponse,Authentication)
+}
+class tech.vedantchimote.review.vote.ReviewVoteService {
+- ReviewRepository reviewRepo
+- ReviewVoteRepository voteRepo
++ VoteResult undoVote(ReviewVote,Integer,VoteType)
++ VoteResult doVote(Integer,Customer,VoteType)
++ void markReviewsVotedForProductByCustomer(List<Review>,Integer,Integer)
+}
+interface tech.vedantchimote.order.OrderDetailRepository {
++ Long countByProductAndCustomerAndOrderStatus(Integer,Integer,OrderStatus)
+}
+interface tech.vedantchimote.setting.SettingRepository {
++ List<Setting> findByCategory(SettingCategory)
++ List<Setting> findByTwoCategories(SettingCategory,SettingCategory)
++ Setting findByKey(String)
+}
+class tech.vedantchimote.order.OrderRestControllerTests {
+- MockMvc mockMvc
+- ObjectMapper objectMapper
++ void testSendOrderReturnRequestFailed()
++ void testSendOrderReturnRequestSuccessful()
+}
+class tech.vedantchimote.order.OrderReturnRequest {
+- Integer orderId
+- String reason
+- String note
++ <<Create>> OrderReturnRequest()
++ <<Create>> OrderReturnRequest(Integer,String,String)
++ Integer getOrderId()
++ void setOrderId(Integer)
++ String getReason()
++ void setReason(String)
++ String getNote()
++ void setNote(String)
+}
+class tech.vedantchimote.product.ProductController {
+- ProductService productService
+- CategoryService categoryService
+- ReviewService reviewService
+- ReviewVoteService voteService
+- ControllerHelper controllerHelper
++ String viewCategoryFirstPage(String,Model)
++ String viewCategoryByPage(String,int,Model)
++ String viewProductDetail(String,Model,HttpServletRequest)
++ String searchFirstPage(String,Model)
++ String searchByPage(String,int,Model)
+}
+class tech.vedantchimote.checkout.CheckoutInfo {
+- float productCost
+- float productTotal
+- float shippingCostTotal
+- float paymentTotal
+- int deliverDays
+- boolean codSupported
++ float getProductCost()
++ void setProductCost(float)
++ float getProductTotal()
++ void setProductTotal(float)
++ float getShippingCostTotal()
++ void setShippingCostTotal(float)
++ float getPaymentTotal()
++ void setPaymentTotal(float)
++ int getDeliverDays()
++ void setDeliverDays(int)
++ Date getDeliverDate()
++ boolean isCodSupported()
++ void setCodSupported(boolean)
++ String getPaymentTotal4PayPal()
+}
+class tech.vedantchimote.review.vote.VoteResult {
+- boolean successful
+- String message
+- int voteCount
+- <<Create>> VoteResult(boolean,String,int)
++ {static} VoteResult fail(String)
++ {static} VoteResult success(String,int)
++ boolean isSuccessful()
++ void setSuccessful(boolean)
++ String getMessage()
++ void setMessage(String)
++ int getVoteCount()
++ void setVoteCount(int)
+}
+class tech.vedantchimote.shoppingcart.ShoppingCartService {
+- CartItemRepository cartRepo
+- ProductRepository productRepo
++ Integer addProduct(Integer,Integer,Customer)
++ List<CartItem> listCartItems(Customer)
++ float updateQuantity(Integer,Integer,Customer)
++ void removeProduct(Integer,Customer)
++ void deleteByCustomer(Customer)
+}
+class tech.vedantchimote.security.oauth.CustomerOAuth2User {
+- String clientName
+- String fullName
+- OAuth2User oauth2User
++ <<Create>> CustomerOAuth2User(OAuth2User,String)
++ Map<String,Object> getAttributes()
++ Collection<? extends GrantedAuthority> getAuthorities()
++ String getName()
++ String getEmail()
++ String getFullName()
++ String getClientName()
++ void setFullName(String)
+}
+class tech.vedantchimote.order.OrderRestController {
+- OrderService orderService
+- CustomerService customerService
++ ResponseEntity<?> handleOrderReturnRequest(OrderReturnRequest,HttpServletRequest)
+- Customer getAuthenticatedCustomer(HttpServletRequest)
+}
+interface tech.vedantchimote.setting.CountryRepository {
++ List<Country> findAllByOrderByNameAsc()
++ Country findByCode(String)
+}
+class tech.vedantchimote.security.oauth.OAuth2LoginSuccessHandler {
+- CustomerService customerService
++ void onAuthenticationSuccess(HttpServletRequest,HttpServletResponse,Authentication)
+- AuthenticationType getAuthenticationType(String)
+}
+class tech.vedantchimote.setting.SettingRepositoryTests {
+~ SettingRepository repo
++ void testFindByTwoCategories()
+}
+class tech.vedantchimote.security.CustomerUserDetailsService {
+- CustomerRepository repo
++ UserDetails loadUserByUsername(String)
+}
+class tech.vedantchimote.MvcConfig {
+}
+interface tech.vedantchimote.setting.StateRepository {
++ List<State> findByCountryOrderByNameAsc(Country)
+}
+interface tech.vedantchimote.shoppingcart.CartItemRepository {
++ List<CartItem> findByCustomer(Customer)
++ CartItem findByCustomerAndProduct(Customer,Product)
++ void updateQuantity(Integer,Integer,Integer)
++ void deleteByCustomerAndProduct(Integer,Integer)
++ void deleteByCustomer(Integer)
+}
+class tech.vedantchimote.setting.SettingFilter {
+- SettingService service
++ void doFilter(ServletRequest,ServletResponse,FilterChain)
+}
+class tech.vedantchimote.product.ProductRepositoryTests {
+~ ProductRepository repo
++ void testFindByAlias()
+}
+class tech.vedantchimote.order.OrderService {
++ {static} int ORDERS_PER_PAGE
+- OrderRepository repo
++ Order createOrder(Customer,Address,List<CartItem>,PaymentMethod,CheckoutInfo)
++ Page<Order> listForCustomerByPage(Customer,int,String,String,String)
++ Order getOrder(Integer,Customer)
++ void setOrderReturnRequested(OrderReturnRequest,Customer)
+}
+interface tech.vedantchimote.review.ReviewRepository {
++ Page<Review> findByCustomer(Integer,Pageable)
++ Page<Review> findByCustomer(Integer,String,Pageable)
++ Review findByCustomerAndId(Integer,Integer)
++ Page<Review> findByProduct(Product,Pageable)
++ Long countByCustomerAndProduct(Integer,Integer)
++ void updateVoteCount(Integer)
++ Integer getVoteCount(Integer)
+}
+interface tech.vedantchimote.review.vote.ReviewVoteRepository {
++ ReviewVote findByReviewAndCustomer(Integer,Integer)
++ List<ReviewVote> findByProductAndCustomer(Integer,Integer)
+}
+class tech.vedantchimote.checkout.paypal.PayPalOrderResponse {
+- String id
+- String status
++ String getId()
++ void setId(String)
++ String getStatus()
++ void setStatus(String)
++ boolean validate(String)
+}
+class tech.vedantchimote.security.oauth.CustomerOAuth2UserService {
++ OAuth2User loadUser(OAuth2UserRequest)
+}
+class tech.vedantchimote.shipping.ShippingRateRepositoryTests {
+- ShippingRateRepository repo
++ void testFindByCountryAndState()
+}
+class tech.vedantchimote.category.CategoryRepositoryTests {
+- CategoryRepository repo
++ void testListEnabledCategories()
++ void testFindCategoryByAlias()
+}
+interface tech.vedantchimote.product.ProductRepository {
++ Page<Product> listByCategory(Integer,String,Pageable)
++ Product findByAlias(String)
++ Page<Product> search(String,Pageable)
++ void updateReviewCountAndAverageRating(Integer)
+}
+interface tech.vedantchimote.customer.CustomerRepository {
++ Customer findByEmail(String)
++ Customer findByVerificationCode(String)
++ void enable(Integer)
++ void updateAuthenticationType(Integer,AuthenticationType)
++ Customer findByResetPasswordToken(String)
+}
+class tech.vedantchimote.order.OrderDetailRepositoryTests {
+- OrderDetailRepository repo
++ void testCountByProductAndCustomerAndOrderStatus()
+}
+class tech.vedantchimote.review.ReviewRepositoryTests {
+- ReviewRepository repo
++ void testFindByCustomerNoKeyword()
++ void testFindByCustomerWithKeyword()
++ void testFindByCustomerAndId()
++ void testFindByProduct()
++ void testCountByCustomerAndProduct()
++ void testUpdateVoteCount()
++ void testGetVoteCount()
+}
+class tech.vedantchimote.customer.CustomerService {
+- CountryRepository countryRepo
+- CustomerRepository customerRepo
+~ PasswordEncoder passwordEncoder
++ List<Country> listAllCountries()
++ boolean isEmailUnique(String)
++ void registerCustomer(Customer)
++ Customer getCustomerByEmail(String)
+- void encodePassword(Customer)
++ boolean verify(String)
++ void updateAuthenticationType(Customer,AuthenticationType)
++ void addNewCustomerUponOAuthLogin(String,String,String,AuthenticationType)
+- void setName(String,Customer)
++ void update(Customer)
++ String updateResetPasswordToken(String)
++ Customer getByResetPasswordToken(String)
++ void updatePassword(String,String)
+}
+class tech.vedantchimote.setting.EmailSettingBag {
++ <<Create>> EmailSettingBag(List<Setting>)
++ String getHost()
++ int getPort()
++ String getUsername()
++ String getPassword()
++ String getSmtpAuth()
++ String getSmtpSecured()
++ String getFromAddress()
++ String getSenderName()
++ String getCustomerVerifySubject()
++ String getCustomerVerifyContent()
++ String getOrderConfirmationSubject()
++ String getOrderConfirmationContent()
+}
+class tech.vedantchimote.checkout.paypal.PayPalApiTests {
+- {static} String BASE_URL
+- {static} String GET_ORDER_API
+- {static} String CLIENT_ID
+- {static} String CLIENT_SECRET
++ void testGetOrderDetails()
+}
+class tech.vedantchimote.checkout.CheckoutService {
+- {static} int DIM_DIVISOR
++ CheckoutInfo prepareCheckout(List<CartItem>,ShippingRate)
+- float calculateShippingCost(List<CartItem>,ShippingRate)
+- float calculateProductTotal(List<CartItem>)
+- float calculateProductCost(List<CartItem>)
+}
+class tech.vedantchimote.shoppingcart.ShoppingCartRestController {
+- ShoppingCartService cartService
+- CustomerService customerService
++ String addProductToCart(Integer,Integer,HttpServletRequest)
+- Customer getAuthenticatedCustomer(HttpServletRequest)
++ String updateQuantity(Integer,Integer,HttpServletRequest)
++ String removeProduct(Integer,HttpServletRequest)
+}
+class tech.vedantchimote.ControllerHelper {
+- CustomerService customerService
++ Customer getAuthenticatedCustomer(HttpServletRequest)
+}
+class MavenWrapperDownloader {
+- {static} String WRAPPER_VERSION
+- {static} String DEFAULT_DOWNLOAD_URL
+- {static} String MAVEN_WRAPPER_PROPERTIES_PATH
+- {static} String MAVEN_WRAPPER_JAR_PATH
+- {static} String PROPERTY_NAME_WRAPPER_URL
++ {static} void main(String[])
+- {static} void downloadFileFromURL(String,File)
+}
+class tech.vedantchimote.customer.CustomerController {
+- CustomerService customerService
+- SettingService settingService
++ String showRegisterForm(Model)
++ String createCustomer(Customer,Model,HttpServletRequest)
+- void sendVerificationEmail(HttpServletRequest,Customer)
++ String verifyAccount(String,Model)
++ String viewAccountDetails(Model,HttpServletRequest)
++ String updateAccountDetails(Model,Customer,RedirectAttributes,HttpServletRequest)
+- void updateNameForAuthenticatedCustomer(Customer,HttpServletRequest)
+- CustomerUserDetails getCustomerUserDetailsObject(Object)
+}
+class tech.vedantchimote.review.vote.ReviewVoteRepositoryTests {
+- ReviewVoteRepository repo
++ void testSaveVote()
++ void testFindByReviewAndCustomer()
++ void testFindByProductAndCustomer()
+}
+class tech.vedantchimote.setting.StateRestController {
+- StateRepository repo
++ List<StateDTO> listByCountry(Integer)
+}
+class tech.vedantchimote.setting.PaymentSettingBag {
++ <<Create>> PaymentSettingBag(List<Setting>)
++ String getURL()
++ String getClientID()
++ String getClientSecret()
+}
+class tech.vedantchimote.shoppingcart.CartItemRepositoryTests {
+- CartItemRepository repo
+- TestEntityManager entityManager
++ void testSaveItem()
++ void testSave2Items()
++ void testFindByCustomer()
++ void testFindByCustomerAndProduct()
++ void testUpdateQuantity()
++ void testDeleteByCustomerAndProduct()
+}
+class tech.vedantchimote.customer.CustomerRestController {
+- CustomerService service
++ String checkDuplicateEmail(String)
+}
+class tech.vedantchimote.shoppingcart.ShoppingCartController {
+- ControllerHelper controllerHelper
+- ShoppingCartService cartService
+- AddressService addressService
+- ShippingRateService shipService
++ String viewCart(Model,HttpServletRequest)
+}
+class tech.vedantchimote.review.ReviewController {
+- String defaultRedirectURL
+- ReviewService reviewService
+- ControllerHelper controllerHelper
+- ProductService productService
+- ReviewVoteService voteService
++ String listFirstPage(Model)
++ String listReviewsByCustomerByPage(Model,HttpServletRequest,int,String,String,String)
++ String viewReview(Integer,Model,RedirectAttributes,HttpServletRequest)
++ String listByProductByPage(Model,String,int,String,String,HttpServletRequest)
++ String listByProductFirstPage(String,Model,HttpServletRequest)
++ String showViewForm(Integer,Model,HttpServletRequest)
++ String saveReview(Model,Review,Integer,HttpServletRequest)
+}
+class tech.vedantchimote.review.vote.VoteReviewRestController {
+- ReviewVoteService service
+- ControllerHelper helper
++ VoteResult voteReview(Integer,String,HttpServletRequest)
+}
+class tech.vedantchimote.review.ReviewService {
++ {static} int REVIEWS_PER_PAGE
+- ReviewRepository reviewRepo
+- OrderDetailRepository orderDetailRepo
+- ProductRepository productRepo
++ Page<Review> listByCustomerByPage(Customer,String,int,String,String)
++ Review getByCustomerAndId(Customer,Integer)
++ Page<Review> list3MostVotedReviewsByProduct(Product)
++ Page<Review> listByProduct(Product,int,String,String)
++ boolean didCustomerReviewProduct(Customer,Integer)
++ boolean canCustomerReviewProduct(Customer,Integer)
++ Review save(Review)
+}
+class tech.vedantchimote.Utility {
++ {static} String getSiteURL(HttpServletRequest)
++ {static} JavaMailSenderImpl prepareMailSender(EmailSettingBag)
++ {static} String getEmailOfAuthenticatedCustomer(HttpServletRequest)
++ {static} String formatCurrency(float,CurrencySettingBag)
+}
+class tech.vedantchimote.shipping.ShippingRateService {
+- ShippingRateRepository repo
++ ShippingRate getShippingRateForCustomer(Customer)
++ ShippingRate getShippingRateForAddress(Address)
+}
+class tech.vedantchimote.order.OrderController {
+- OrderService orderService
+- ControllerHelper controllerHelper
+- ReviewService reviewService
++ String listFirstPage(Model,HttpServletRequest)
++ String listOrdersByPage(Model,HttpServletRequest,int,String,String,String)
++ String viewOrderDetails(Model,Integer,HttpServletRequest)
+- void setProductReviewableStatus(Customer,Order)
+}
+class tech.vedantchimote.checkout.CheckoutController {
+- CheckoutService checkoutService
+- ControllerHelper controllerHelper
+- AddressService addressService
+- ShippingRateService shipService
+- ShoppingCartService cartService
+- OrderService orderService
+- SettingService settingService
+- PayPalService paypalService
++ String showCheckoutPage(Model,HttpServletRequest)
++ String placeOrder(HttpServletRequest)
+- void sendOrderConfirmationEmail(HttpServletRequest,Order)
++ String processPayPalOrder(HttpServletRequest,Model)
+}
+class tech.vedantchimote.address.AddressController {
+- AddressService addressService
+- CustomerService customerService
+- ControllerHelper controllerHelper
++ String showAddressBook(Model,HttpServletRequest)
++ String newAddress(Model)
++ String saveAddress(Address,HttpServletRequest,RedirectAttributes)
++ String editAddress(Integer,Model,HttpServletRequest)
++ String deleteAddress(Integer,RedirectAttributes,HttpServletRequest)
++ String setDefaultAddress(Integer,HttpServletRequest)
+}
+interface tech.vedantchimote.category.CategoryRepository {
++ List<Category> findAllEnabled()
++ Category findByAliasEnabled(String)
+}
+class tech.vedantchimote.setting.CurrencySettingBag {
++ <<Create>> CurrencySettingBag(List<Setting>)
++ String getSymbol()
++ String getSymbolPosition()
++ String getDecimalPointType()
++ String getThousandPointType()
++ int getDecimalDigits()
+}
+interface tech.vedantchimote.order.OrderRepository {
++ Page<Order> findAll(String,Integer,Pageable)
++ Page<Order> findAll(Integer,Pageable)
++ Order findByIdAndCustomer(Integer,Customer)
+}
+class tech.vedantchimote.checkout.paypal.PayPalApiException {
++ <<Create>> PayPalApiException(String)
+}
+class tech.vedantchimote.setting.SettingService {
+- SettingRepository settingRepo
+- CurrencyRepository currencyRepo
++ List<Setting> getGeneralSettings()
++ EmailSettingBag getEmailSettings()
++ CurrencySettingBag getCurrencySettings()
++ PaymentSettingBag getPaymentSettings()
++ String getCurrencyCode()
+}
+interface tech.vedantchimote.address.AddressRepository {
++ List<Address> findByCustomer(Customer)
++ Address findByIdAndCustomer(Integer,Integer)
++ void deleteByIdAndCustomer(Integer,Integer)
++ void setDefaultAddress(Integer)
++ void setNonDefaultForOthers(Integer,Integer)
++ Address findDefaultByCustomer(Integer)
+}
+interface tech.vedantchimote.shipping.ShippingRateRepository {
++ ShippingRate findByCountryAndState(Country,String)
+}
+class tech.vedantchimote.security.CustomerUserDetails {
+- Customer customer
++ <<Create>> CustomerUserDetails(Customer)
++ Collection<? extends GrantedAuthority> getAuthorities()
++ String getPassword()
++ String getUsername()
++ boolean isAccountNonExpired()
++ boolean isAccountNonLocked()
++ boolean isCredentialsNonExpired()
++ boolean isEnabled()
++ String getFullName()
++ Customer getCustomer()
+}
+class tech.vedantchimote.AvoCommerceFrontEndApplication {
++ {static} void main(String[])
+}
+class tech.vedantchimote.shoppingcart.ShoppingCartException {
++ <<Create>> ShoppingCartException(String)
+}
+class tech.vedantchimote.address.AddressService {
+- AddressRepository repo
++ List<Address> listAddressBook(Customer)
++ void save(Address)
++ Address get(Integer,Integer)
++ void delete(Integer,Integer)
++ void setDefaultAddress(Integer,Integer)
++ Address getDefaultAddress(Customer)
+}
+class tech.vedantchimote.security.WebSecurityConfig {
+- CustomerOAuth2UserService oAuth2UserService
+- OAuth2LoginSuccessHandler oauth2LoginHandler
+- DatabaseLoginSuccessHandler databaseLoginHandler
++ PasswordEncoder passwordEncoder()
+# void configure(HttpSecurity)
++ void configure(WebSecurity)
++ UserDetailsService userDetailsService()
++ DaoAuthenticationProvider authenticationProvider()
+}
+class tech.vedantchimote.customer.CustomerRepositoryTests {
+- CustomerRepository repo
+- TestEntityManager entityManager
++ void testCreateCustomer1()
++ void testCreateCustomer2()
++ void testListCustomers()
++ void testUpdateCustomer()
++ void testGetCustomer()
++ void testDeleteCustomer()
++ void testFindByEmail()
++ void testFindByVerificationCode()
++ void testEnableCustomer()
++ void testUpdateAuthenticationType()
+}
+class tech.vedantchimote.category.CategoryService {
+- CategoryRepository repo
++ List<Category> listNoChildrenCategories()
++ Category getCategory(String)
++ List<Category> getCategoryParents(Category)
+}
+class tech.vedantchimote.MainController {
+- CategoryService categoryService
++ String viewHomePage(Model)
++ String viewLoginPage()
+}
+enum tech.vedantchimote.review.vote.VoteType {
++  UP
++  DOWN
+}
+
+
+org.springframework.data.repository.CrudRepository <|-- tech.vedantchimote.setting.CurrencyRepository
+org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler <|-- tech.vedantchimote.security.DatabaseLoginSuccessHandler
+org.springframework.data.jpa.repository.JpaRepository <|-- tech.vedantchimote.order.OrderDetailRepository
+org.springframework.data.repository.CrudRepository <|-- tech.vedantchimote.setting.SettingRepository
+org.springframework.security.oauth2.core.user.OAuth2User <|.. tech.vedantchimote.security.oauth.CustomerOAuth2User
+org.springframework.data.repository.CrudRepository <|-- tech.vedantchimote.setting.CountryRepository
+org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler <|-- tech.vedantchimote.security.oauth.OAuth2LoginSuccessHandler
+org.springframework.security.core.userdetails.UserDetailsService <|.. tech.vedantchimote.security.CustomerUserDetailsService
+org.springframework.web.servlet.config.annotation.WebMvcConfigurer <|.. tech.vedantchimote.MvcConfig
+org.springframework.data.repository.CrudRepository <|-- tech.vedantchimote.setting.StateRepository
+org.springframework.data.repository.CrudRepository <|-- tech.vedantchimote.shoppingcart.CartItemRepository
+javax.servlet.Filter <|.. tech.vedantchimote.setting.SettingFilter
+org.springframework.data.jpa.repository.JpaRepository <|-- tech.vedantchimote.review.ReviewRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- tech.vedantchimote.review.vote.ReviewVoteRepository
+org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService <|-- tech.vedantchimote.security.oauth.CustomerOAuth2UserService
+org.springframework.data.repository.PagingAndSortingRepository <|-- tech.vedantchimote.product.ProductRepository
+org.springframework.data.repository.CrudRepository <|-- tech.vedantchimote.customer.CustomerRepository
+tech.vedantchimote.common.entity.setting.SettingBag <|-- tech.vedantchimote.setting.EmailSettingBag
+tech.vedantchimote.common.entity.setting.SettingBag <|-- tech.vedantchimote.setting.PaymentSettingBag
+org.springframework.data.repository.CrudRepository <|-- tech.vedantchimote.category.CategoryRepository
+tech.vedantchimote.common.entity.setting.SettingBag <|-- tech.vedantchimote.setting.CurrencySettingBag
+org.springframework.data.jpa.repository.JpaRepository <|-- tech.vedantchimote.order.OrderRepository
+tech.vedantchimote.checkout.paypal.Exception <|-- tech.vedantchimote.checkout.paypal.PayPalApiException
+org.springframework.data.repository.CrudRepository <|-- tech.vedantchimote.address.AddressRepository
+org.springframework.data.repository.CrudRepository <|-- tech.vedantchimote.shipping.ShippingRateRepository
+org.springframework.security.core.userdetails.UserDetails <|.. tech.vedantchimote.security.CustomerUserDetails
+tech.vedantchimote.shoppingcart.Exception <|-- tech.vedantchimote.shoppingcart.ShoppingCartException
+org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter <|-- tech.vedantchimote.security.WebSecurityConfig
+@enduml

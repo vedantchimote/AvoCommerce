@@ -1,0 +1,640 @@
+@startuml
+left to right direction
+class tech.vedantchimote.common.Constants {
++ {static} String S3_BASE_URI
+}
+class tech.vedantchimote.common.entity.CartItem {
+- Customer customer
+- Product product
+- int quantity
+- float shippingCost
++ <<Create>> CartItem()
++ Customer getCustomer()
++ void setCustomer(Customer)
++ Product getProduct()
++ void setProduct(Product)
++ int getQuantity()
++ void setQuantity(int)
++ String toString()
++ float getSubtotal()
++ float getShippingCost()
++ void setShippingCost(float)
+}
+class tech.vedantchimote.common.exception.ReviewNotFoundException {
++ <<Create>> ReviewNotFoundException(String)
+}
+abstract class tech.vedantchimote.common.entity.AbstractAddress {
+# String firstName
+# String lastName
+# String phoneNumber
+# String addressLine1
+# String addressLine2
+# String city
+# String state
+# String postalCode
++ String getFirstName()
++ void setFirstName(String)
++ String getLastName()
++ void setLastName(String)
++ String getPhoneNumber()
++ void setPhoneNumber(String)
++ String getAddressLine1()
++ void setAddressLine1(String)
++ String getAddressLine2()
++ void setAddressLine2(String)
++ String getCity()
++ void setCity(String)
++ String getState()
++ void setState(String)
++ String getPostalCode()
++ void setPostalCode(String)
+}
+class tech.vedantchimote.common.entity.Currency {
+- String name
+- String symbol
+- String code
++ <<Create>> Currency()
++ <<Create>> Currency(String,String,String)
++ String getName()
++ void setName(String)
++ String getSymbol()
++ void setSymbol(String)
++ String getCode()
++ void setCode(String)
++ String toString()
+}
+class tech.vedantchimote.common.exception.CategoryNotFoundException {
++ <<Create>> CategoryNotFoundException(String)
+}
+class tech.vedantchimote.common.entity.product.Product {
+- String name
+- String alias
+- String shortDescription
+- String fullDescription
+- Date createdTime
+- Date updatedTime
+- boolean enabled
+- boolean inStock
+- float cost
+- float price
+- float discountPercent
+- float length
+- float width
+- float height
+- float weight
+- String mainImage
+- Category category
+- Brand brand
+- Set<ProductImage> images
+- List<ProductDetail> details
+- int reviewCount
+- float averageRating
+- boolean customerCanReview
+- boolean reviewedByCustomer
++ <<Create>> Product(Integer)
++ <<Create>> Product()
++ <<Create>> Product(String)
++ String getName()
++ void setName(String)
++ String getAlias()
++ void setAlias(String)
++ String getShortDescription()
++ void setShortDescription(String)
++ String getFullDescription()
++ void setFullDescription(String)
++ Date getCreatedTime()
++ void setCreatedTime(Date)
++ Date getUpdatedTime()
++ void setUpdatedTime(Date)
++ boolean isEnabled()
++ void setEnabled(boolean)
++ boolean isInStock()
++ void setInStock(boolean)
++ float getCost()
++ void setCost(float)
++ float getPrice()
++ void setPrice(float)
++ float getDiscountPercent()
++ void setDiscountPercent(float)
++ float getLength()
++ void setLength(float)
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ float getWeight()
++ void setWeight(float)
++ Category getCategory()
++ void setCategory(Category)
++ Brand getBrand()
++ void setBrand(Brand)
++ String toString()
++ String getMainImage()
++ void setMainImage(String)
++ Set<ProductImage> getImages()
++ void setImages(Set<ProductImage>)
++ void addExtraImage(String)
++ String getMainImagePath()
++ List<ProductDetail> getDetails()
++ void setDetails(List<ProductDetail>)
++ void addDetail(String,String)
++ void addDetail(Integer,String,String)
++ boolean containsImageName(String)
++ String getShortName()
++ float getDiscountPrice()
++ int getReviewCount()
++ void setReviewCount(int)
++ float getAverageRating()
++ void setAverageRating(float)
++ String getURI()
++ boolean isCustomerCanReview()
++ void setCustomerCanReview(boolean)
++ boolean isReviewedByCustomer()
++ void setReviewedByCustomer(boolean)
+}
+class MavenWrapperDownloader {
+- {static} String WRAPPER_VERSION
+- {static} String DEFAULT_DOWNLOAD_URL
+- {static} String MAVEN_WRAPPER_PROPERTIES_PATH
+- {static} String MAVEN_WRAPPER_JAR_PATH
+- {static} String PROPERTY_NAME_WRAPPER_URL
++ {static} void main(String[])
+- {static} void downloadFileFromURL(String,File)
+}
+abstract class tech.vedantchimote.common.entity.IdBasedEntity {
+# Integer id
++ Integer getId()
++ void setId(Integer)
+}
+class tech.vedantchimote.common.entity.StateDTO {
+- Integer id
+- String name
++ <<Create>> StateDTO()
++ <<Create>> StateDTO(Integer,String)
++ Integer getId()
++ void setId(Integer)
++ String getName()
++ void setName(String)
+}
+class tech.vedantchimote.common.entity.State {
+- String name
+- Country country
++ <<Create>> State()
++ <<Create>> State(String,Country)
++ String getName()
++ void setName(String)
++ Country getCountry()
++ void setCountry(Country)
++ String toString()
+}
+class tech.vedantchimote.common.entity.Role {
+- String name
+- String description
++ <<Create>> Role()
++ <<Create>> Role(Integer)
++ <<Create>> Role(String)
++ <<Create>> Role(String,String)
++ String getName()
++ void setName(String)
++ String getDescription()
++ void setDescription(String)
++ int hashCode()
++ boolean equals(Object)
++ String toString()
+}
+class tech.vedantchimote.common.entity.Customer {
+- String email
+- String password
+- String verificationCode
+- boolean enabled
+- Date createdTime
+- AuthenticationType authenticationType
+- String resetPasswordToken
++ <<Create>> Customer()
++ <<Create>> Customer(Integer)
++ String getEmail()
++ void setEmail(String)
++ String getPassword()
++ void setPassword(String)
++ String getVerificationCode()
++ void setVerificationCode(String)
++ boolean isEnabled()
++ void setEnabled(boolean)
++ Date getCreatedTime()
++ void setCreatedTime(Date)
++ String getFullName()
++ AuthenticationType getAuthenticationType()
++ void setAuthenticationType(AuthenticationType)
++ String getResetPasswordToken()
++ void setResetPasswordToken(String)
+}
+class tech.vedantchimote.common.entity.Brand {
+- String name
+- String logo
+- Set<Category> categories
++ <<Create>> Brand()
++ <<Create>> Brand(String)
++ <<Create>> Brand(Integer,String)
++ String getName()
++ void setName(String)
++ String getLogo()
++ void setLogo(String)
++ Set<Category> getCategories()
++ void setCategories(Set<Category>)
++ String toString()
++ String getLogoPath()
+}
+class tech.vedantchimote.common.exception.CustomerNotFoundException {
++ <<Create>> CustomerNotFoundException(String)
+}
+class tech.vedantchimote.common.entity.setting.SettingBag {
+- List<Setting> listSettings
++ <<Create>> SettingBag(List<Setting>)
++ Setting get(String)
++ String getValue(String)
++ void update(String,String)
++ List<Setting> list()
+}
+class tech.vedantchimote.common.entity.ReviewVote {
+- {static} int VOTE_UP_POINT
+- {static} int VOTE_DOWN_POINT
+- int votes
+- Customer customer
+- Review review
++ int getVotes()
++ void setVotes(int)
++ Customer getCustomer()
++ void setCustomer(Customer)
++ Review getReview()
++ void setReview(Review)
++ void voteUp()
++ void voteDown()
++ String toString()
++ boolean isUpvoted()
++ boolean isDownvoted()
+}
+class tech.vedantchimote.common.entity.Country {
+- String name
+- String code
+- Set<State> states
++ <<Create>> Country()
++ <<Create>> Country(Integer)
++ <<Create>> Country(Integer,String,String)
++ <<Create>> Country(String,String)
++ <<Create>> Country(String)
++ String getName()
++ void setName(String)
++ String getCode()
++ void setCode(String)
++ String toString()
+}
+class tech.vedantchimote.common.entity.setting.Setting {
+- String key
+- String value
+- SettingCategory category
++ <<Create>> Setting()
++ <<Create>> Setting(String)
++ <<Create>> Setting(String,String,SettingCategory)
++ String getKey()
++ void setKey(String)
++ String getValue()
++ void setValue(String)
++ SettingCategory getCategory()
++ void setCategory(SettingCategory)
++ int hashCode()
++ boolean equals(Object)
++ String toString()
+}
+enum tech.vedantchimote.common.entity.order.OrderStatus {
++  NEW
++  CANCELLED
++  PROCESSING
++  PACKAGED
++  PICKED
++  SHIPPING
++  DELIVERED
++  RETURN_REQUESTED
++  RETURNED
++  PAID
++  REFUNDED
++ {abstract}String defaultDescription()
+}
+class tech.vedantchimote.common.entity.product.ProductDetail {
+- String name
+- String value
+- Product product
++ <<Create>> ProductDetail()
++ <<Create>> ProductDetail(Integer,String,String,Product)
++ <<Create>> ProductDetail(String,String,Product)
++ String getName()
++ void setName(String)
++ String getValue()
++ void setValue(String)
++ Product getProduct()
++ void setProduct(Product)
+}
+class tech.vedantchimote.common.entity.Category {
+- String name
+- String alias
+- String image
+- boolean enabled
+- String allParentIDs
+- Category parent
+- Set<Category> children
+- boolean hasChildren
++ <<Create>> Category()
++ <<Create>> Category(Integer)
++ <<Create>> Category(String)
++ <<Create>> Category(String,Category)
++ <<Create>> Category(Integer,String,String)
++ {static} Category copyIdAndName(Category)
++ {static} Category copyIdAndName(Integer,String)
++ {static} Category copyFull(Category)
++ {static} Category copyFull(Category,String)
++ String getName()
++ void setName(String)
++ String getAlias()
++ void setAlias(String)
++ String getImage()
++ void setImage(String)
++ boolean isEnabled()
++ void setEnabled(boolean)
++ Category getParent()
++ void setParent(Category)
++ Set<Category> getChildren()
++ void setChildren(Set<Category>)
++ String getImagePath()
++ boolean isHasChildren()
++ void setHasChildren(boolean)
++ String toString()
++ String getAllParentIDs()
++ void setAllParentIDs(String)
+}
+class tech.vedantchimote.common.entity.Address {
+- Customer customer
+- boolean defaultForShipping
++ Customer getCustomer()
++ void setCustomer(Customer)
++ boolean isDefaultForShipping()
++ void setDefaultForShipping(boolean)
+}
+class tech.vedantchimote.common.entity.product.ProductImage {
+- String name
+- Product product
++ <<Create>> ProductImage()
++ <<Create>> ProductImage(Integer,String,Product)
++ <<Create>> ProductImage(String,Product)
++ String getName()
++ void setName(String)
++ Product getProduct()
++ void setProduct(Product)
++ String getImagePath()
+}
+class tech.vedantchimote.common.entity.User {
+- String email
+- String password
+- String firstName
+- String lastName
+- String photos
+- boolean enabled
+- Set<Role> roles
++ <<Create>> User()
++ <<Create>> User(String,String,String,String)
++ String getEmail()
++ void setEmail(String)
++ String getPassword()
++ void setPassword(String)
++ String getFirstName()
++ void setFirstName(String)
++ String getLastName()
++ void setLastName(String)
++ String getPhotos()
++ void setPhotos(String)
++ boolean isEnabled()
++ void setEnabled(boolean)
++ Set<Role> getRoles()
++ void setRoles(Set<Role>)
++ void addRole(Role)
++ String toString()
++ String getPhotosImagePath()
++ String getFullName()
++ boolean hasRole(String)
+}
+enum tech.vedantchimote.common.entity.AuthenticationType {
++  DATABASE
++  GOOGLE
++  FACEBOOK
+}
+class tech.vedantchimote.common.entity.order.Order {
+- String country
+- Date orderTime
+- float shippingCost
+- float productCost
+- float subtotal
+- float tax
+- float total
+- int deliverDays
+- Date deliverDate
+- PaymentMethod paymentMethod
+- OrderStatus status
+- Customer customer
+- Set<OrderDetail> orderDetails
+- List<OrderTrack> orderTracks
++ <<Create>> Order()
++ <<Create>> Order(Integer,Date,float,float,float)
++ String getCountry()
++ void setCountry(String)
++ Date getOrderTime()
++ void setOrderTime(Date)
++ float getShippingCost()
++ void setShippingCost(float)
++ float getProductCost()
++ void setProductCost(float)
++ float getSubtotal()
++ void setSubtotal(float)
++ float getTax()
++ void setTax(float)
++ float getTotal()
++ void setTotal(float)
++ int getDeliverDays()
++ void setDeliverDays(int)
++ Date getDeliverDate()
++ void setDeliverDate(Date)
++ PaymentMethod getPaymentMethod()
++ void setPaymentMethod(PaymentMethod)
++ OrderStatus getStatus()
++ void setStatus(OrderStatus)
++ Customer getCustomer()
++ void setCustomer(Customer)
++ Set<OrderDetail> getOrderDetails()
++ void setOrderDetails(Set<OrderDetail>)
++ void copyAddressFromCustomer()
++ String toString()
++ String getDestination()
++ void copyShippingAddress(Address)
++ String getShippingAddress()
++ List<OrderTrack> getOrderTracks()
++ void setOrderTracks(List<OrderTrack>)
++ String getDeliverDateOnForm()
++ void setDeliverDateOnForm(String)
++ String getRecipientName()
++ String getRecipientAddress()
++ boolean isCOD()
++ boolean isProcessing()
++ boolean isPicked()
++ boolean isShipping()
++ boolean isDelivered()
++ boolean isReturnRequested()
++ boolean isReturned()
++ boolean hasStatus(OrderStatus)
++ String getProductNames()
+}
+class tech.vedantchimote.common.exception.ProductNotFoundException {
++ <<Create>> ProductNotFoundException(String)
+}
+class tech.vedantchimote.common.entity.Review {
+- String headline
+- String comment
+- int rating
+- int votes
+- Date reviewTime
+- Product product
+- Customer customer
+- boolean upvotedByCurrentCustomer
+- boolean downvotedByCurrentCustomer
++ <<Create>> Review()
++ <<Create>> Review(Integer)
++ String getHeadline()
++ void setHeadline(String)
++ String getComment()
++ void setComment(String)
++ int getRating()
++ void setRating(int)
++ Date getReviewTime()
++ void setReviewTime(Date)
++ Product getProduct()
++ void setProduct(Product)
++ Customer getCustomer()
++ void setCustomer(Customer)
++ String toString()
++ int getVotes()
++ void setVotes(int)
++ boolean isUpvotedByCurrentCustomer()
++ void setUpvotedByCurrentCustomer(boolean)
++ boolean isDownvotedByCurrentCustomer()
++ void setDownvotedByCurrentCustomer(boolean)
++ int hashCode()
++ boolean equals(Object)
+}
+class tech.vedantchimote.common.entity.order.OrderTrack {
+- String notes
+- Date updatedTime
+- OrderStatus status
+- Order order
++ String getNotes()
++ void setNotes(String)
++ Date getUpdatedTime()
++ void setUpdatedTime(Date)
++ OrderStatus getStatus()
++ void setStatus(OrderStatus)
++ Order getOrder()
++ void setOrder(Order)
++ String getUpdatedTimeOnForm()
++ void setUpdatedTimeOnForm(String)
+}
+enum tech.vedantchimote.common.entity.order.PaymentMethod {
++  COD
++  CREDIT_CARD
++  PAYPAL
+}
+class tech.vedantchimote.common.entity.ShippingRate {
+- float rate
+- int days
+- boolean codSupported
+- Country country
+- String state
++ float getRate()
++ void setRate(float)
++ int getDays()
++ void setDays(int)
++ boolean isCodSupported()
++ void setCodSupported(boolean)
++ Country getCountry()
++ void setCountry(Country)
++ String getState()
++ void setState(String)
++ String toString()
++ int hashCode()
++ boolean equals(Object)
+}
+class tech.vedantchimote.common.exception.OrderNotFoundException {
++ <<Create>> OrderNotFoundException(String)
+}
+class tech.vedantchimote.common.entity.order.OrderDetail {
+- int quantity
+- float productCost
+- float shippingCost
+- float unitPrice
+- float subtotal
+- Product product
+- Order order
++ <<Create>> OrderDetail()
++ <<Create>> OrderDetail(String,int,float,float,float)
++ <<Create>> OrderDetail(int,String,float,float,float)
++ int getQuantity()
++ void setQuantity(int)
++ float getProductCost()
++ void setProductCost(float)
++ float getShippingCost()
++ void setShippingCost(float)
++ float getUnitPrice()
++ void setUnitPrice(float)
++ float getSubtotal()
++ void setSubtotal(float)
++ Product getProduct()
++ void setProduct(Product)
++ Order getOrder()
++ void setOrder(Order)
+}
+enum tech.vedantchimote.common.entity.setting.SettingCategory {
++  GENERAL
++  MAIL_SERVER
++  MAIL_TEMPLATES
++  CURRENCY
++  PAYMENT
+}
+class tech.vedantchimote.common.entity.AbstractAddressWithCountry {
+# Country country
++ Country getCountry()
++ void setCountry(Country)
++ String toString()
+}
+
+
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.CartItem
+tech.vedantchimote.common.exception.Exception <|-- tech.vedantchimote.common.exception.ReviewNotFoundException
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.AbstractAddress
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.Currency
+tech.vedantchimote.common.exception.Exception <|-- tech.vedantchimote.common.exception.CategoryNotFoundException
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.product.Product
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.State
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.Role
+tech.vedantchimote.common.entity.AbstractAddressWithCountry <|-- tech.vedantchimote.common.entity.Customer
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.Brand
+tech.vedantchimote.common.exception.Exception <|-- tech.vedantchimote.common.exception.CustomerNotFoundException
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.ReviewVote
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.Country
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.product.ProductDetail
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.Category
+tech.vedantchimote.common.entity.AbstractAddressWithCountry <|-- tech.vedantchimote.common.entity.Address
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.product.ProductImage
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.User
+tech.vedantchimote.common.entity.AbstractAddress <|-- tech.vedantchimote.common.entity.order.Order
+tech.vedantchimote.common.exception.Exception <|-- tech.vedantchimote.common.exception.ProductNotFoundException
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.Review
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.order.OrderTrack
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.ShippingRate
+tech.vedantchimote.common.exception.Exception <|-- tech.vedantchimote.common.exception.OrderNotFoundException
+tech.vedantchimote.common.entity.IdBasedEntity <|-- tech.vedantchimote.common.entity.order.OrderDetail
+tech.vedantchimote.common.entity.AbstractAddress <|-- tech.vedantchimote.common.entity.AbstractAddressWithCountry
+@enduml
